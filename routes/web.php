@@ -16,7 +16,7 @@ Route::get( '/', function () {
 } );
 
 Route::get( '/practice', function () {
-    return Inertia::render( 'Practice' );
+    return Inertia::render( 'Practice/Index' );
 } );
 
 Route::resource( 'tasks', TaskController::class );

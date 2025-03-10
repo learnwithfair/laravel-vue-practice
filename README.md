@@ -53,7 +53,7 @@ const state = reactive({ count: 0 });
 </template>
 ```
 
-##### Computed Properties
+##### 3.Computed Properties
 
 -   কাজ:
     Vue.js-এ কিছুমান য়ংক্রিয়ভাবে আপডেট করার জন computed প্র োপার্টি ববহার করা হয়।
@@ -78,6 +78,8 @@ const squared = computed(() => num.value * num.value);
     </div>
 </template>
 ```
+
+##### 4. Switch Rendering
 
 ```vue
 <script setup>
@@ -138,4 +140,191 @@ const calculate = (operation) => {
         <p>Result: {{ result }}</p>
     </div>
 </template>
+```
+
+##### 5. Class and Style Bindings
+
+```vue
+<script setup>
+import { ref } from "vue";
+const isActive = ref(false);
+</script>
+<template>
+    <div>
+        <p :class="{ active: isActive }">Styled Text</p>
+        <button
+            @click="isActive = !isActive"
+            class="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 ml-2"
+        >
+            Set Color
+        </button>
+    </div>
+</template>
+
+<style>
+.active {
+    color: red;
+    font-weight: bold;
+}
+</style>
+```
+
+##### 6. Conditional Rendering
+
+```vue
+<script setup>
+import { ref } from "vue";
+const isLoggedIn = ref(false);
+</script>
+
+<template>
+    <div>
+        <p v-if="isLoggedIn">Welcome back!</p>
+        <p v-else>Please log in</p>
+        <button
+            @click="isLoggedIn = !isLoggedIn"
+            class="p-2 bg-blue-600 rounded"
+        >
+            Toggle
+        </button>
+    </div>
+</template>
+```
+
+##### 7.List Rendering
+
+```vue
+<script setup>
+import { ref } from "vue";
+const users = ref([
+    { id: 1, name: "John" },
+    { id: 2, name: "Jane" },
+]);
+</script>
+
+<template>
+    <ul>
+        <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+    </ul>
+</template>
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
+```
+
+##### 6.
+
+```vue
+
 ```
