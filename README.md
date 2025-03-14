@@ -1,4 +1,4 @@
-#### v-bind/:
+##### 1. v-bind/:
 
 -   Vue-তে ডাটা বাইন্ডি ং করার জন {{ }} এবং v-bind ববহার করা হয়।
 
@@ -17,7 +17,7 @@ const tooltip = ref("This is a tooltip message");
 </template>
 ```
 
-##### Reactivity
+##### 2. Reactivity
 
 -   কাজ:
     Vue.js এর সবচে য়ে শক্তি শালী ফি চার হল reactivity system, যা ডাটা পরি বর্তনে র সাথে সাথে UI আপডে ট
@@ -267,16 +267,53 @@ const focusInput = () => {
 </template>
 ```
 
-##### 6.
+##### 11. Registration (কম্পোনেন্ট নিবন্ধন করা)
+
+কাজ: Vue.js-এ কম্পোনেন্ট নিবন্ধন করার দুটি পদ্ধতি রয়েছে:
+
+-   Global Registration (Vue অ্যাপে একবার নিবন্ধন করলে যেকোনো স্থানে ব্যবহার করা যাবে)
+-   Local Registration (শুধুমাত্র নির্দিষ্ট কম্পোনেন্টের মধ্যে ব্যবহার করা যাবে)
 
 ```vue
+<script setup>
+import IndexCopy10 from "./Index copy 10.vue";
+</script>
 
+<template>
+    <div>
+        <!-- Local Registration -->
+        <index-copy-10 />
+        <IndexCopy10 class="mt-5" />
+    </div>
+</template>
 ```
 
-##### 6.
+##### 12. Props (প্রপস ব্যবহার করা)
+
+কাজ: Props ব্যবহার করে আমরা Parent কম্পোনেন্ট থেকে Child কম্পোনেন্টে ডাটা পাঠাতে পারি।
+
+-   Parent Component
 
 ```vue
+<script setup>
+import ChildComponent from "./ChildComponent.vue";
+</script>
 
+<template>
+    <ChildComponent message="Hello from Parent!" />
+</template>
+```
+
+-   Child Component
+
+```vue
+<script setup>
+defineProps(["message"]);
+</script>
+
+<template>
+    <p>{{ message }}</p>
+</template>
 ```
 
 ##### 6.
