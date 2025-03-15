@@ -1,9 +1,12 @@
 <script setup>
-import ChildComponent from './ChildComponent.vue';
+import useCounter from "@/Composables/useCounter";
 
+const { count, increment } = useCounter();
 </script>
 
-
 <template>
-    <ChildComponent message="Hello from Parent!" />
+    <div>
+        <p>Count: {{ count }}</p>
+        <button @click="increment">Increase</button>
+    </div>
 </template>

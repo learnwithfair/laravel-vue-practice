@@ -316,34 +316,269 @@ defineProps(["message"]);
 </template>
 ```
 
-##### 6.
+##### 13. Events (ইভেন্ট হ্যান্ডলিং করা)
+
+কাজ: Child কম্পোনেন্ট থেকে Parent কম্পোনেন্টে ডাটা পাঠানোর জন্য ইভেন্ট ব্যবহার করা হয়।
+
+-   Parent Component
 
 ```vue
+<script setup>
+import { ref } from "vue";
+import ChildComponent1 from "./ChildComponent1.vue";
 
+const receivedMgs = ref("");
+const receiveMessage = (msg) => {
+    receivedMgs.value = msg;
+};
+</script>
+
+<template>
+    <div>
+        <ChildComponent1 @send-message="receiveMessage" />
+        <p>{{ receivedMgs }}</p>
+    </div>
+</template>
 ```
 
-##### 6.
+-   Child Component
 
 ```vue
+<script setup>
+const mgs = "Hello from Child!";
+</script>
 
+<template>
+    <button @click="$emit('send-message', mgs)">Send Message</button>
+    <!-- <button @click="$emit('send-message', 'Hello from Child!')">Send Message</button> -->
+</template>
 ```
 
-##### 6.
+##### 14. Component v-model (কম্পোনেন্টে v-model ব্যবহার করা)
+
+কাজ: Vue 3-এ v-model ব্যবহার করে Parent এবং Child কম্পোনেন্টের মধ্যে Two-way Data Binding করা যায়।
+
+-   Parent Component
 
 ```vue
+<script setup>
+import { ref } from "vue";
+import ChildComponent1 from "./ChildComponent1.vue";
 
+const receivedMgs = ref("");
+const receiveMessage = (msg) => {
+    receivedMgs.value = msg;
+};
+</script>
+
+<template>
+    <div>
+        <ChildComponent1 @send-message="receiveMessage" />
+        <p>{{ receivedMgs }}</p>
+    </div>
+</template>
 ```
 
-##### 6.
+-   Child Component
 
 ```vue
+<script setup>
+const mgs = "Hello from Child!";
+</script>
 
+<template>
+    <button @click="$emit('send-message', mgs)">Send Message</button>
+    <!-- <button @click="$emit('send-message', 'Hello from Child!')">Send Message</button> -->
+</template>
 ```
 
-##### 6.
+##### 15. Component v-model (কম্পোনেন্টে v-model ব্যবহার করা)
+
+কাজ: Vue 3-এ v-model ব্যবহার করে Parent এবং Child কম্পোনেন্টের মধ্যে Two-way Data Binding করা যায়।
+
+-   Parent Component
 
 ```vue
+<script setup>
+import { ref } from "vue";
+import ChildComponentCopy from "./ChildComponent copy.vue";
 
+const message = ref("");
+</script>
+
+<template>
+    <ChildComponentCopy v-model="message" />
+    <p>Parent Message: {{ message }}</p>
+</template>
+```
+
+-   Child Component
+
+```vue
+<script setup>
+import { ref } from "vue";
+
+defineProps(["modelValue"]);
+const inputValue = ref("");
+</script>
+
+<template>
+    <input
+        v-model="inputValue"
+        @input="$emit('update:modelValue', inputValue)"
+    />
+</template>
+```
+
+##### 16. Fallthrough Attributes (অতিরিক্ত অ্যাট্রিবিউট হস্তান্তর করা)
+
+কাজ: Child কম্পোনেন্টের Root Element-এ Parent Component থেকে প্রাপ্ত সব Attribute স্বয়ংক্রিয়ভাবে যোগ হয়।
+
+-   Parent Component
+
+```vue
+<script setup>
+import ChildComponentCopy2 from "./ChildComponent copy 2.vue";
+</script>
+
+<template>
+    <ChildComponentCopy2 class="custom-class" title="Hello" />
+</template>
+<style scoped>
+.custom-class {
+    color: red;
+    padding: 10px 8px;
+    background: blue;
+}
+</style>
+```
+
+-   Child Component
+
+```vue
+<template>
+    <button>Click Me</button>
+</template>
+```
+
+-   ফলাফল:
+
+```html
+<button class="custom-class" title="Hello">Click Me</button>
+```
+
+##### 17. Slots (কম্পোনেন্টের ভিতরে কাস্টম কন্টেন্ট পাঠানো)
+
+কাজ: Slots ব্যবহার করে Parent কম্পোনেন্ট থেকে Child কম্পোনেন্টের ভিতরে ডাটা পাঠানো যায়।
+
+-   Parent Component
+
+```vue
+<script setup>
+import ChildComponentCopy3 from "./ChildComponent copy 3.vue";
+</script>
+
+<template>
+    <ChildComponentCopy3>
+        <p>This is a custom slot content.</p>
+    </ChildComponentCopy3>
+</template>
+```
+
+-   Child Component
+
+```vue
+<template>
+    <div>
+        <slot> </slot>
+    </div>
+</template>
+```
+
+##### 18. Provide / Inject (ডাটা শেয়ার করা)
+
+কাজ: Provide / Inject ব্যবহার করে Parent থেকে অনেকগুলো Nested Child কম্পোনেন্টে ডাটা শেয়ার করা যায়।
+
+-   Parent Component
+
+```vue
+<script setup>
+import { provide } from "vue";
+import ChildComponentCopy4 from "./ChildComponent copy 4.vue";
+
+provide("appMessage", "Hello from Provide!");
+</script>
+
+<template>
+    <ChildComponentCopy4 />
+</template>
+```
+
+-   Child Component
+
+```vue
+<script setup>
+import { inject } from "vue";
+
+const injectedMessage = inject("appMessage");
+</script>
+
+<template>
+    <p>{{ injectedMessage }}</p>
+</template>
+```
+
+##### 19. Async Components (অ্যাসিনক্রোনাস কম্পোনেন্ট লোড করা)
+
+কাজ: Lazy Load করা যায়, যখন কম্পোনেন্টের লোডিং সময় বেশি লাগে।
+
+```vue
+<script setup>
+import { defineAsyncComponent } from "vue";
+
+const AsyncComponent = defineAsyncComponent(() =>
+    import("../../Components/ApplicationLogo.vue")
+);
+</script>
+
+<template>
+    <Suspense>
+        <AsyncComponent />
+
+        <template #fallback>
+            <p class="text-[red]">Loading...</p>
+        </template>
+    </Suspense>
+</template>
+```
+
+##### 20. Composables (Reusable Functions ব্যবহার করা)
+
+কাজ: Vue 3-এ Composables ব্যবহার করে আমরা Reusable Functions তৈরি করতে পারি, যা কম্পোনেন্টগুলোর মধ্যে কোড পুনঃব্যবহারযোগ্য করে।
+
+```vue
+<script setup>
+import useCounter from "@/Composables/useCounter";
+
+const { count, increment } = useCounter();
+</script>
+
+<template>
+    <div>
+        <p>Count: {{ count }}</p>
+        <button @click="increment">Increase</button>
+    </div>
+</template>
+```
+
+```js
+// Composables/useCounter.js
+import { ref } from "vue";
+export default function useCounter() {
+    const count = ref(0);
+    const increment = () => count.value++;
+    return { count, increment };
+}
 ```
 
 ##### 6.
