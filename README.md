@@ -363,44 +363,6 @@ const mgs = "Hello from Child!";
 ```vue
 <script setup>
 import { ref } from "vue";
-import ChildComponent1 from "./ChildComponent1.vue";
-
-const receivedMgs = ref("");
-const receiveMessage = (msg) => {
-    receivedMgs.value = msg;
-};
-</script>
-
-<template>
-    <div>
-        <ChildComponent1 @send-message="receiveMessage" />
-        <p>{{ receivedMgs }}</p>
-    </div>
-</template>
-```
-
--   Child Component
-
-```vue
-<script setup>
-const mgs = "Hello from Child!";
-</script>
-
-<template>
-    <button @click="$emit('send-message', mgs)">Send Message</button>
-    <!-- <button @click="$emit('send-message', 'Hello from Child!')">Send Message</button> -->
-</template>
-```
-
-##### 15. Component v-model (কম্পোনেন্টে v-model ব্যবহার করা)
-
-কাজ: Vue 3-এ v-model ব্যবহার করে Parent এবং Child কম্পোনেন্টের মধ্যে Two-way Data Binding করা যায়।
-
--   Parent Component
-
-```vue
-<script setup>
-import { ref } from "vue";
 import ChildComponentCopy from "./ChildComponent copy.vue";
 
 const message = ref("");
@@ -430,7 +392,7 @@ const inputValue = ref("");
 </template>
 ```
 
-##### 16. Fallthrough Attributes (অতিরিক্ত অ্যাট্রিবিউট হস্তান্তর করা)
+##### 15. Fallthrough Attributes (অতিরিক্ত অ্যাট্রিবিউট হস্তান্তর করা)
 
 কাজ: Child কম্পোনেন্টের Root Element-এ Parent Component থেকে প্রাপ্ত সব Attribute স্বয়ংক্রিয়ভাবে যোগ হয়।
 
@@ -467,7 +429,7 @@ import ChildComponentCopy2 from "./ChildComponent copy 2.vue";
 <button class="custom-class" title="Hello">Click Me</button>
 ```
 
-##### 17. Slots (কম্পোনেন্টের ভিতরে কাস্টম কন্টেন্ট পাঠানো)
+##### 16. Slots (কম্পোনেন্টের ভিতরে কাস্টম কন্টেন্ট পাঠানো)
 
 কাজ: Slots ব্যবহার করে Parent কম্পোনেন্ট থেকে Child কম্পোনেন্টের ভিতরে ডাটা পাঠানো যায়।
 
@@ -495,7 +457,7 @@ import ChildComponentCopy3 from "./ChildComponent copy 3.vue";
 </template>
 ```
 
-##### 18. Provide / Inject (ডাটা শেয়ার করা)
+##### 17. Provide / Inject (ডাটা শেয়ার করা)
 
 কাজ: Provide / Inject ব্যবহার করে Parent থেকে অনেকগুলো Nested Child কম্পোনেন্টে ডাটা শেয়ার করা যায়।
 
@@ -528,7 +490,7 @@ const injectedMessage = inject("appMessage");
 </template>
 ```
 
-##### 19. Async Components (অ্যাসিনক্রোনাস কম্পোনেন্ট লোড করা)
+##### 18. Async Components (অ্যাসিনক্রোনাস কম্পোনেন্ট লোড করা)
 
 কাজ: Lazy Load করা যায়, যখন কম্পোনেন্টের লোডিং সময় বেশি লাগে।
 
@@ -552,7 +514,7 @@ const AsyncComponent = defineAsyncComponent(() =>
 </template>
 ```
 
-##### 20. Composables (Reusable Functions ব্যবহার করা)
+##### 19. Composables (Reusable Functions ব্যবহার করা)
 
 কাজ: Vue 3-এ Composables ব্যবহার করে আমরা Reusable Functions তৈরি করতে পারি, যা কম্পোনেন্টগুলোর মধ্যে কোড পুনঃব্যবহারযোগ্য করে।
 
@@ -581,28 +543,167 @@ export default function useCounter() {
 }
 ```
 
-##### 6.
+##### 20. Transition (অ্যানিমেশন প্রয়োগ করা)
+
+কাজ: Vue.js-এ Transition ব্যবহার করে CSS অ্যানিমেশন সহজে যোগ করা যায়।
 
 ```vue
+<script setup>
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { ref } from "vue";
+const show = ref(true);
+</script>
 
+<template>
+    <div>
+        <PrimaryButton @click="show = !show">Toggle</PrimaryButton>
+        <transition name="rahat">
+            <p v-if="show">Hello Vue!</p>
+        </transition>
+    </div>
+</template>
+
+<style scoped>
+.rahat-enter-active,
+.rahat-leave-active {
+    transition: opacity 0.5s;
+}
+
+.rahat-enter,
+.rahat-leave-to {
+    opacity: 0;
+}
+</style>
 ```
 
-##### 6.
+##### 21.TransitionGroup (একাধিক এলিমেন্ট অ্যানিমেট করা)
 
 ```vue
+<script setup>
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { ref } from "vue";
+const items = ref([1, 2, 3]);
+const addItem = () => items.value.push(items.value.length + 1);
+</script>
 
+<template>
+    <PrimaryButton @click="addItem">Add Item</PrimaryButton>
+    <transition-group name="list" tag="ul">
+        <li v-for="item in items" :key="item">{{ item }}</li>
+    </transition-group>
+</template>
+
+<style scoped>
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s;
+}
+
+.list-enter,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+</style>
 ```
 
-##### 6.
+##### 22. KeepAlive (কম্পোনেন্ট স্টেট সংরক্ষণ করা)
 
 ```vue
+<script setup>
+import { ref } from "vue";
 
+import IndexCopy20 from "./Index copy 20.vue";
+import IndexCopy21 from "./Index copy 21.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+const currentView = ref(IndexCopy21);
+const toggle = ref(false);
+
+const changeView = () =>
+    toggle.value
+        ? (currentView.value = IndexCopy20)
+        : (currentView.value = IndexCopy21);
+// const changeView = () => {
+//     toggle.value = !toggle.value;
+//     if (toggle.value) currentView.value = IndexCopy20;
+//     else currentView.value = IndexCopy21;
+// };
+</script>
+
+<template>
+    <PrimaryButton
+        @click="
+            () => {
+                toggle = !toggle;
+                changeView();
+            }
+        "
+    >
+        Change View
+    </PrimaryButton>
+
+    <!-- <PrimaryButton @click="changeView"> Change View </PrimaryButton> -->
+
+    <br />
+    <keep-alive>
+        <component :is="currentView" />
+    </keep-alive>
+</template>
 ```
 
-##### 6.
+##### 23. Teleport (একটি এলিমেন্ট অন্য স্থানে রেন্ডার করা)
+
+Vue 3-এর Teleport ব্যবহার করে আমরা একটি কম্পোনেন্ট বা HTML এলিমেন্টকে body বা অন্য কোনো নির্দিষ্ট স্থানে রেন্ডার করতে পারি, যদিও এটি মূল কম্পোনেন্টের অংশ থাকে।
 
 ```vue
+<script setup>
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { ref, Teleport } from "vue";
 
+const showModal = ref(false);
+</script>
+
+<template>
+    <div>
+        <h1>Vue 3 Teleport Example</h1>
+        <PrimaryButton @click="showModal = true">Open Modal</PrimaryButton>
+
+        <!-- Modal Component -->
+        <!-- <Teleport to="#modal-container"> -->
+        <Teleport to="body">
+            <div v-if="showModal" class="modal">
+                <div class="modal-content">
+                    <h2>Modal Title</h2>
+                    <p>This is a modal rendered outside #app!</p>
+                    <button @click="showModal = false">Close</button>
+                </div>
+            </div>
+        </Teleport>
+    </div>
+</template>
+
+<style scoped>
+/* Modal Styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+</style>
 ```
 
 ##### 6.
