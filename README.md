@@ -1,3 +1,8 @@
+# Laravel 11, Vue 3 এবং Inertia.js গাইড
+
+-   Document:
+    https://docs.google.com/document/d/1wpWH0XZfWYKLRPYAbPzqPGedjxjWwpcRKUy4_PxntQY/edit?usp=sharing
+
 ##### 1. v-bind/:
 
 -   Vue-তে ডাটা বাইন্ডি ং করার জন {{ }} এবং v-bind ববহার করা হয়।
